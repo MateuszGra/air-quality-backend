@@ -21,7 +21,9 @@ export class SensorsEntity extends BaseEntity implements SensorsData {
   })
   name: string;
 
-  @Column()
+  @Column({
+    type: 'int',
+  })
   idParam: number;
 
   @ManyToOne((type) => StationsEntity, (entity) => entity.sensors)

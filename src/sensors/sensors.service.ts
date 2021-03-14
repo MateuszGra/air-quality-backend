@@ -23,11 +23,8 @@ export class SensorsService {
         const sensorExist: SensorsEntity = await SensorsEntity.findOne(
           sensor.id,
         );
-        const station: StationsEntity = await StationsEntity.findOne(
-          sensor.stationId,
-        );
 
-        if (!sensorExist && station) {
+        if (!sensorExist) {
           const newSensor = SensorsEntity.create({
             id: sensor.id,
             name: sensor.param.paramName,
