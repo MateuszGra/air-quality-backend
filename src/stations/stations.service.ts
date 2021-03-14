@@ -40,7 +40,7 @@ export class StationsService {
         await newStation.save();
         console.log(`\x1b[32m`, `CREATE station id: ${station.id}`);
       } else if (stationExist && stationExist.name !== station.city.name) {
-        const updateStation = StationsEntity.update(station.id, {
+        await StationsEntity.update(station.id, {
           name: station.city.name,
         });
         console.log(`\x1b[32m`, `UPDATE station id: ${station.id}`);
