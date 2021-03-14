@@ -9,6 +9,6 @@ export class StationsController {
 
   @Get('/import')
   async import() {
-    return await this.stationsService.importStations();
+    return await this.stationsService.saveStations();
   }
 }
