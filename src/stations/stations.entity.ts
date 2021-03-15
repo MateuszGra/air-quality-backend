@@ -21,6 +21,20 @@ export class StationsEntity extends BaseEntity implements StationsData {
   })
   name: string;
 
+  @Column({
+    type: 'decimal',
+    precision: 8,
+    scale: 6,
+  })
+  gegrLat: number;
+
+  @Column({
+    type: 'decimal',
+    precision: 8,
+    scale: 6,
+  })
+  gegrLon: number;
+
   @OneToMany((type) => SensorsEntity, (entity) => entity.station)
   sensors: SensorsEntity[];
 
