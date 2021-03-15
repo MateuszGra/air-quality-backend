@@ -27,7 +27,6 @@ export class SensorsService {
         if (!sensorExist) {
           const newSensor = SensorsEntity.create({
             id: sensor.id,
-            name: sensor.param.paramName,
             idParam: sensor.param.idParam,
             station: station,
           });

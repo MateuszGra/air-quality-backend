@@ -17,11 +17,6 @@ export class SensorsEntity extends BaseEntity implements SensorsData {
   id: number;
 
   @Column({
-    length: 100,
-  })
-  name: string;
-
-  @Column({
     type: 'int',
   })
   idParam: number;
