@@ -7,3 +7,14 @@ export interface StationsData {
   gegrLon: number;
   sensors: SensorsEntity[];
 }
+
+export type SensorsResp =
+  | {
+      success: true;
+      count?: number;
+      items?: SensorsEntity[];
+    }
+  | {
+      success: false;
+      errors: string[];
+    };
