@@ -48,8 +48,8 @@ export class StationsService {
             const newStation = StationsEntity.create({
               id: station.id,
               name: station.city.name,
-              gegrLat: Number(station.gegrLat),
-              gegrLon: Number(station.gegrLon),
+              gegrLat: station.gegrLat,
+              gegrLon: station.gegrLon,
             });
 
             await newStation.save();
@@ -61,8 +61,8 @@ export class StationsService {
           ) {
             await StationsEntity.update(station.id, {
               name: station.city.name,
-              gegrLat: Number(station.gegrLat),
-              gegrLon: Number(station.gegrLon),
+              gegrLat: station.gegrLat,
+              gegrLon: station.gegrLon,
             });
 
             console.log(`\x1b[32m`, `UPDATE station id: ${station.id}`);
@@ -73,6 +73,30 @@ export class StationsService {
       } else {
         throw new Error(stations.errors[0]);
       }
+    } catch (e) {
+      return {
+        success: false,
+        errors: [e.message],
+      };
+    }
+  }
+
+  async showAll() {
+    try {
+      const [items, count]: [
+        StationsEntity[],
+        number,
+      ] = await StationsEntity.findAndCount();
+
+      if (count === 0) {
+        throw new Error('Not found');
+      }
+
+      return {
+        success: true,
+        count,
+        items,
+      };
     } catch (e) {
       return {
         success: false,

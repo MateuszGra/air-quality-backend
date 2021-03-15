@@ -7,6 +7,10 @@ export class StationsController {
   constructor(
     @Inject(StationsService) private stationsService: StationsService,
   ) {}
+  @Get('/show-all')
+  async showAll() {
+    return await this.stationsService.showAll();
+  }
 
   @Get('/import')
   async import(): Promise<SensorsResp> {
