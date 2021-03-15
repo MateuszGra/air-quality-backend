@@ -32,7 +32,6 @@ export class IndexLevelService {
           date: indexLevel.stCalcDate,
           station: station,
           indexId: indexLevel.stIndexLevel.id,
-          indexLevelName: indexLevel.stIndexLevel.indexLevelName,
         });
         await newSensor.save();
         console.log(`\x1b[32m`, `CREATE sensor id: ${indexLevel.id}`);

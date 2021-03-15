@@ -26,11 +26,6 @@ export class IndexLevelEntity extends BaseEntity implements IndexLevelData {
   })
   indexId: number;
 
-  @Column({
-    nullable: true,
-  })
-  indexLevelName: string | null;
-
   @ManyToOne((type) => StationsEntity, (entity) => entity.indexLevel)
   @JoinColumn()
   @Index()

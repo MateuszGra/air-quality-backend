@@ -5,5 +5,4 @@ export interface IndexLevelData {
   date: Date;
   station: StationsEntity;
   indexId: number;
-  indexLevelName: string | null;
 }
