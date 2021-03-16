@@ -1,6 +1,6 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { StationsService } from './stations.service';
-import { SensorsResp } from '../interfaces/stations';
+import { StationsResp } from '../interfaces/stations';
 
 @Controller('stations')
 export class StationsController {
@@ -13,7 +13,7 @@ export class StationsController {
   }
 
   @Get('/import')
-  async import(): Promise<SensorsResp> {
+  async import(): Promise<StationsResp> {
     return await this.stationsService.saveStations();
   }
 }

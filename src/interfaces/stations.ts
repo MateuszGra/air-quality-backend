@@ -8,7 +8,7 @@ export interface StationsData {
   sensors: SensorsEntity[];
 }
 
-export type SensorsResp =
+export type StationsResp =
   | {
       success: true;
       count?: number;

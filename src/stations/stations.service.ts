@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { StationsEntity } from './stations.entity';
-import { SensorsResp } from '../interfaces/stations';
+import { StationsResp } from '../interfaces/stations';
 
 @Injectable()
 export class StationsService {
@@ -24,11 +24,11 @@ export class StationsService {
     }
   }
 
-  async saveStations(): Promise<SensorsResp> {
+  async saveStations(): Promise<StationsResp> {
     try {
-      const stations = await this.fetchStations();
-      if (stations.success === true) {
-        for (const station of stations.items) {
+      const stationsResp = await this.fetchStations();
+      if (stationsResp.success === true) {
+        for (const station of stationsResp.items) {
           const stationExist = await StationsEntity.findOne(station.id);
 
           if (station.city && station.addressStreet != null) {
@@ -71,7 +71,7 @@ export class StationsService {
 
         return { success: true };
       } else {
-        throw new Error(stations.errors[0]);
+        throw new Error(stationsResp.errors[0]);
       }
     } catch (e) {
       return {

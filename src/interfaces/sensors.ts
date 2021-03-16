@@ -5,3 +5,12 @@ export interface SensorsData {
   station: StationsEntity;
   idParam: number;
 }
+
+export type SensorsResp =
+  | {
+      success: true;
+    }
+  | {
+      success: false;
+      errors: string[];
+    };
