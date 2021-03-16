@@ -32,7 +32,7 @@ export class IndexLevelService {
       for (const station of stations) {
         const indexLevelResp = await this.fetchIndexLevel(station.id);
         if (indexLevelResp.success === true) {
-          const indexExist: IndexLevelEntity = await IndexLevelEntity.findOne({
+          const indexExist = await IndexLevelEntity.findOne({
             where: {
               station: indexLevelResp.items.id,
               date: indexLevelResp.items.stCalcDate,
@@ -46,10 +46,7 @@ export class IndexLevelService {
               indexId: indexLevelResp.items.stIndexLevel.id,
             });
             await newSensor.save();
-            console.log(
-              `\x1b[32m`,
-              `CREATE sensor id: ${indexLevelResp.items.id}`,
-            );
+            console.log(`\x1b[32m`, `CREATE index id: ${newSensor.id}`);
           }
         }
       }

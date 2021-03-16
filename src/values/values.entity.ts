@@ -22,7 +22,7 @@ export class ValuesEntity extends BaseEntity implements ValuesData {
   date: Date;
 
   @Column({
-    type: 'decimal',
+    type: 'double',
   })
   value: number;
 
