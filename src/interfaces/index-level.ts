@@ -6,3 +6,12 @@ export interface IndexLevelData {
   station: StationsEntity;
   indexId: number;
 }
+
+export type IndexLevelResp =
+  | {
+      success: true;
+    }
+  | {
+      success: false;
+      errors: string[];
+    };
