@@ -2,9 +2,17 @@ import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { StationsEntity } from './stations.entity';
 import { StationsResp } from '../interfaces/stations';
+import { InjectModel } from '@nestjs/mongoose';
+import { Stations } from '../interfaces/stations.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class StationsService {
+  constructor(
+    @InjectModel(Stations.name)
+    private StationModel: Model<Stations>,
+  ) {}
+
   async fetchStations() {
     try {
       const stations = await axios
@@ -29,7 +37,9 @@ export class StationsService {
       const stationsResp = await this.fetchStations();
       if (stationsResp.success === true) {
         for (const station of stationsResp.items) {
-          const stationExist = await StationsEntity.findOne(station.id);
+          const stationExist = await this.StationModel.findOne({
+            id: station.id,
+          });
 
           if (station.city && station.addressStreet != null) {
             station.city.name += ` ${station.addressStreet}`;
@@ -45,7 +55,7 @@ export class StationsService {
           }
 
           if (!stationExist) {
-            const newStation = StationsEntity.create({
+            const newStation = await this.StationModel.create({
               id: station.id,
               name: station.city.name,
               gegrLat: station.gegrLat,
@@ -56,14 +66,17 @@ export class StationsService {
             console.log(`\x1b[32m`, `CREATE station id: ${station.id}`);
           } else if (
             stationExist.name !== station.city.name ||
-            stationExist.gegrLat !== station.gegrLat ||
-            stationExist.gegrLon !== station.gegrLon
+            stationExist.gegrLat !== Number(station.gegrLat) ||
+            stationExist.gegrLon !== Number(station.gegrLon)
           ) {
-            await StationsEntity.update(station.id, {
-              name: station.city.name,
-              gegrLat: station.gegrLat,
-              gegrLon: station.gegrLon,
-            });
+            await this.StationModel.updateOne(
+              { id: station.id },
+              {
+                name: station.city.name,
+                gegrLat: station.gegrLat,
+                gegrLon: station.gegrLon,
+              },
+            );
 
             console.log(`\x1b[32m`, `UPDATE station id: ${station.id}`);
           }
