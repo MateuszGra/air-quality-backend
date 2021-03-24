@@ -37,7 +37,9 @@ export class SensorsService {
   async saveSensors(): Promise<SensorsResp> {
     try {
       const stationsResp: StationsResp = await this.stationsService.showAll();
-      if (stationsResp.success === false) throw new Error('Stations not found');
+      if (stationsResp.success === false) {
+        throw new Error('Stations not found');
+      }
 
       for (const station of stationsResp.items) {
         const sensorsResp = await this.fetchSensors(station.id);
