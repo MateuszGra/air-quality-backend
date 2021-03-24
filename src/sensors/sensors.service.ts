@@ -70,4 +70,27 @@ export class SensorsService {
       };
     }
   }
+
+  async showAll(): Promise<SensorsResp> {
+    try {
+      const items = await this.SensorsModel.find()
+        .select(['-__v', '-_id'])
+        .exec();
+
+      if (items.length === 0) {
+        throw new Error('Not found');
+      }
+
+      return {
+        success: true,
+        count: items.length,
+        items,
+      };
+    } catch (e) {
+      return {
+        success: false,
+        errors: [e.message],
+      };
+    }
+  }
 }

@@ -1,3 +1,5 @@
+import { Sensors } from '../schemas/sensors.schema';
+
 export interface SensorsData {
   id: number;
   idParam: number;
@@ -7,6 +9,8 @@ export interface SensorsData {
 export type SensorsResp =
   | {
       success: true;
+      count?: number;
+      items?: Sensors[];
     }
   | {
       success: false;
