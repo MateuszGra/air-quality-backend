@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { StationsResp } from '../interfaces/stations';
 import { InjectModel } from '@nestjs/mongoose';
-import { Stations } from '../interfaces/stations.schema';
+import { Stations } from '../schemas/stations.schema';
 import { Model } from 'mongoose';
 
 @Injectable()

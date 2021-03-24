@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { StationsData } from './stations';
+import { StationsData } from '../interfaces/stations';
 
 @Schema()
 export class Stations extends Document implements StationsData {
