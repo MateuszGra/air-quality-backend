@@ -57,23 +57,23 @@ export class StationsService {
             const newStation = await this.StationModel.create({
               id: station.id,
               name: station.city.name,
-              gegrLat: station.gegrLat,
-              gegrLon: station.gegrLon,
+              latitude: station.gegrLat,
+              longitude: station.gegrLon,
             });
 
             await newStation.save();
             console.log(`\x1b[32m`, `CREATE station id: ${station.id}`);
           } else if (
             stationExist.name !== station.city.name ||
-            stationExist.gegrLat !== Number(station.gegrLat) ||
-            stationExist.gegrLon !== Number(station.gegrLon)
+            stationExist.latitude !== Number(station.gegrLat) ||
+            stationExist.longitude !== Number(station.gegrLon)
           ) {
             await this.StationModel.updateOne(
               { id: station.id },
               {
                 name: station.city.name,
-                gegrLat: station.gegrLat,
-                gegrLon: station.gegrLon,
+                latitude: station.gegrLat,
+                longitude: station.gegrLon,
               },
             );
 

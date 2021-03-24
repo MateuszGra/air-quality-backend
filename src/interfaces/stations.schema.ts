@@ -8,10 +8,10 @@ export class Stations extends Document implements StationsData {
   id: number;
 
   @Prop()
-  gegrLat: number;
+  latitude: number;
 
   @Prop()
-  gegrLon: number;
+  longitude: number;
 
   @Prop()
   name: string;

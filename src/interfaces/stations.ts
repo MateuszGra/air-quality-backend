@@ -1,8 +1,8 @@
 export interface StationsData {
   id: number;
   name: string;
-  gegrLat: number;
-  gegrLon: number;
+  latitude: number;
+  longitude: number;
 }
 
 export type StationsResp =
