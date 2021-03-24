@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { StationsEntity } from './stations.entity';
 import { StationsResp } from '../interfaces/stations';
 import { InjectModel } from '@nestjs/mongoose';
 import { Stations } from '../interfaces/stations.schema';
@@ -96,18 +95,17 @@ export class StationsService {
 
   async showAll() {
     try {
-      const [items, count]: [
-        StationsEntity[],
-        number,
-      ] = await StationsEntity.findAndCount();
+      const items = await this.StationModel.find()
+        .select(['-__v', '-_id'])
+        .exec();
 
-      if (count === 0) {
+      if (items.length === 0) {
         throw new Error('Not found');
       }
 
       return {
         success: true,
-        count,
+        count: items.length,
         items,
       };
     } catch (e) {

@@ -4,7 +4,7 @@ import { StationsData } from './stations';
 
 @Schema()
 export class Stations extends Document implements StationsData {
-  @Prop()
+  @Prop({ index: true })
   id: number;
 
   @Prop()
