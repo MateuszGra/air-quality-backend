@@ -1,11 +1,7 @@
-import { StationsEntity } from '../stations/stations.entity';
-import { ValuesEntity } from '../values/values.entity';
-
 export interface SensorsData {
   id: number;
-  station: StationsEntity;
   idParam: number;
-  values: ValuesEntity[];
+  idStation: number;
 }
 
 export type SensorsResp =

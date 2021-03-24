@@ -1,3 +1,5 @@
+import { Stations } from '../schemas/stations.schema';
+
 export interface StationsData {
   id: number;
   name: string;
@@ -9,7 +11,7 @@ export type StationsResp =
   | {
       success: true;
       count?: number;
-      items?: any;
+      items?: Stations[];
     }
   | {
       success: false;

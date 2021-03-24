@@ -6,7 +6,7 @@ import { SensorsResp } from '../interfaces/sensors';
 export class SensorsController {
   constructor(@Inject(SensorsService) private sensorsService: SensorsService) {}
 
-  @Get('/import/')
+  @Get('/import')
   async import(): Promise<SensorsResp> {
     return await this.sensorsService.saveSensors();
   }

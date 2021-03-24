@@ -93,7 +93,7 @@ export class StationsService {
     }
   }
 
-  async showAll() {
+  async showAll(): Promise<StationsResp> {
     try {
       const items = await this.StationModel.find()
         .select(['-__v', '-_id'])

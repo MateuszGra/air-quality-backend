@@ -8,12 +8,11 @@ import {
   OneToMany,
   PrimaryColumn,
 } from 'typeorm';
-import { SensorsData } from '../interfaces/sensors';
 import { StationsEntity } from '../stations/stations.entity';
 import { ValuesEntity } from '../values/values.entity';
 
 @Entity()
-export class SensorsEntity extends BaseEntity implements SensorsData {
+export class SensorsEntity extends BaseEntity {
   @PrimaryColumn()
   @Index()
   id: number;
