@@ -7,11 +7,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { IndexLevelData } from '../interfaces/index-level';
 import { StationsEntity } from '../stations/stations.entity';
 
 @Entity()
-export class IndexLevelEntity extends BaseEntity implements IndexLevelData {
+export class IndexLevelEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

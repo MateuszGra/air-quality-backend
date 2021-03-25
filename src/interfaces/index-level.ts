@@ -1,10 +1,9 @@
-import { StationsEntity } from '../stations/stations.entity';
+import { Types } from 'mongoose';
 
 export interface IndexLevelData {
-  id: string;
   date: Date;
-  station: StationsEntity;
   indexId: number;
+  station: Types.ObjectId;
 }
 
 export type IndexLevelResp =

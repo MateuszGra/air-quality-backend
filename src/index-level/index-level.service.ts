@@ -1,11 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { StationsEntity } from '../stations/stations.entity';
-import { IndexLevelEntity } from './index-level.entity';
 import { IndexLevelResp } from '../interfaces/index-level';
+import { InjectModel } from '@nestjs/mongoose';
+import { Stations } from '../schemas/stations.schema';
+import { Model } from 'mongoose';
+import { IndexLevel } from '../schemas/index-level.schema';
 
 @Injectable()
 export class IndexLevelService {
+  constructor(
+    @InjectModel(Stations.name)
+    private StationModel: Model<Stations>,
+    @InjectModel(IndexLevel.name)
+    private IndexLevelModel: Model<IndexLevel>,
+  ) {}
+
   async fetchIndexLevel(id) {
     try {
       const indexLevel = await axios
@@ -27,20 +36,17 @@ export class IndexLevelService {
 
   async saveIndexLevel(): Promise<IndexLevelResp> {
     try {
-      const stations: StationsEntity[] = await StationsEntity.find();
-
+      const stations = await this.StationModel.find();
       for (const station of stations) {
         const indexLevelResp = await this.fetchIndexLevel(station.id);
         if (indexLevelResp.success === true) {
-          const indexExist = await IndexLevelEntity.findOne({
-            where: {
-              station: indexLevelResp.items.id,
-              date: indexLevelResp.items.stCalcDate,
-            },
-          });
+          const indexExist = await this.IndexLevelModel.findOne({
+            station: station._id,
+            date: indexLevelResp.items.stCalcDate,
+          }).exec();
 
           if (!indexExist && indexLevelResp.items.stIndexLevel != null) {
-            const newSensor = IndexLevelEntity.create({
+            const newSensor = await this.IndexLevelModel.create({
               date: indexLevelResp.items.stCalcDate,
               station: station,
               indexId: indexLevelResp.items.stIndexLevel.id,
