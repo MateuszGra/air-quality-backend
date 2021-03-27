@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, SchemaTypes, Types } from 'mongoose';
 import { SensorsData } from '../interfaces/sensors';
+import { Stations } from './stations.schema';
 
 @Schema()
 export class Sensors extends Document implements SensorsData {
@@ -8,10 +9,10 @@ export class Sensors extends Document implements SensorsData {
   id: number;
 
   @Prop()
-  idParam: number;
+  param: number;
 
-  @Prop()
-  idStation: number;
+  @Prop({ type: SchemaTypes.ObjectId, ref: Stations.name })
+  station: Types.ObjectId;
 }
 
 export const SensorsSchema = SchemaFactory.createForClass(Sensors);

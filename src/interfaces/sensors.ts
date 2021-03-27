@@ -1,9 +1,10 @@
 import { Sensors } from '../schemas/sensors.schema';
+import { Types } from 'mongoose';
 
 export interface SensorsData {
   id: number;
-  idParam: number;
-  idStation: number;
+  param: number;
+  station: Types.ObjectId;
 }
 
 export type SensorsResp =

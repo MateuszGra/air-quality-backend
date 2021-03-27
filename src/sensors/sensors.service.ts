@@ -1,18 +1,18 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { SensorsResp } from '../interfaces/sensors';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Sensors } from '../schemas/sensors.schema';
-import { StationsService } from '../stations/stations.service';
-import { StationsResp } from '../interfaces/stations';
+import { Stations } from '../schemas/stations.schema';
 
 @Injectable()
 export class SensorsService {
   constructor(
     @InjectModel(Sensors.name)
     private SensorsModel: Model<Sensors>,
-    @Inject(StationsService) private stationsService: StationsService,
+    @InjectModel(Stations.name)
+    private StationsModel: Model<Stations>,
   ) {}
 
   async fetchSensors(id) {
@@ -36,12 +36,9 @@ export class SensorsService {
 
   async saveSensors(): Promise<SensorsResp> {
     try {
-      const stationsResp: StationsResp = await this.stationsService.showAll();
-      if (stationsResp.success === false) {
-        throw new Error('Stations not found');
-      }
+      const stations = await this.StationsModel.find().exec();
 
-      for (const station of stationsResp.items) {
+      for (const station of stations) {
         const sensorsResp = await this.fetchSensors(station.id);
 
         if (sensorsResp.success === true) {
@@ -53,8 +50,8 @@ export class SensorsService {
             if (!sensorExist) {
               const newSensor = await this.SensorsModel.create({
                 id: sensor.id,
-                idParam: sensor.param.idParam,
-                idStation: station.id,
+                param: sensor.param.idParam,
+                station,
               });
               await newSensor.save();
               console.log(`\x1b[32m`, `CREATE sensor id: ${sensor.id}`);
@@ -63,29 +60,6 @@ export class SensorsService {
         }
       }
       return { success: true };
-    } catch (e) {
-      return {
-        success: false,
-        errors: [e.message],
-      };
-    }
-  }
-
-  async showAll(): Promise<SensorsResp> {
-    try {
-      const items = await this.SensorsModel.find()
-        .select(['-__v', '-_id'])
-        .exec();
-
-      if (items.length === 0) {
-        throw new Error('Not found');
-      }
-
-      return {
-        success: true,
-        count: items.length,
-        items,
-      };
     } catch (e) {
       return {
         success: false,
