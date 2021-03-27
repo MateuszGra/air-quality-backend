@@ -1,9 +1,8 @@
-import { SensorsEntity } from '../sensors/sensors.entity';
+import { Types } from 'mongoose';
 
 export interface ValuesData {
-  id: string;
   date: Date;
-  sensor: SensorsEntity;
+  sensor: Types.ObjectId;
   value: number;
 }
 
