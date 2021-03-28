@@ -49,7 +49,7 @@ export class IndexLevelService {
             const newSensor = await this.IndexLevelModel.create({
               date: indexLevelResp.items.stCalcDate,
               station: station,
-              indexId: indexLevelResp.items.stIndexLevel.id,
+              index: indexLevelResp.items.stIndexLevel.id,
             });
             await newSensor.save();
             console.log(`\x1b[32m`, `CREATE index id: ${newSensor.id}`);

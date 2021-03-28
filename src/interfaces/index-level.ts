@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 
 export interface IndexLevelData {
   date: Date;
-  indexId: number;
+  index: number;
   station: Types.ObjectId;
 }
 

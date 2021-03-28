@@ -9,7 +9,7 @@ export class IndexLevel extends Document implements IndexLevelData {
   date: Date;
 
   @Prop()
-  indexId: number;
+  index: number;
 
   @Prop({ type: SchemaTypes.ObjectId, ref: Stations.name })
   station: Types.ObjectId;
